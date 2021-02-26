@@ -1,0 +1,15 @@
+spring:
+  jpa:
+    database: mysql
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+  datasource:
+    druid:
+      url: jdbc:mysql://localhost:3306/db_partnerManager?useSSL=false&serverTimezone=UTC
+      username: root
+      password: aa123456.
+
+  redis:
+    host: localhost
+    port: 6379
