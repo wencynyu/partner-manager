@@ -8,7 +8,10 @@ import top.wenxyn.partner.manager.entity.vo.PageVO;
 
 import java.io.Serializable;
 import java.util.List;
-
+/**
+ * @author yuwenxin980214@gmail.com
+ * @date 2021/2/27 19:48
+ */
 public interface Service<T extends BaseEntity, ID> {
 
     T queryOneById(ID id);

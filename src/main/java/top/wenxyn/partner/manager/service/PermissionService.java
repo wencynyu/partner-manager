@@ -7,7 +7,10 @@ import top.wenxyn.partner.manager.entity.BaseEntity;
 import top.wenxyn.partner.manager.entity.TAuthPermission;
 
 import java.io.Serializable;
-
+/**
+ * @author yuwenxin980214@gmail.com
+ * @date 2021/2/27 19:48
+ */
 @Service
 public class PermissionService extends AbstractService<TAuthPermission, Integer, TPermissionRepository> {
 

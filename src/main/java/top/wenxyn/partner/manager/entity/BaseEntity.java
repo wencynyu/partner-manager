@@ -9,7 +9,10 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
-
+/**
+ * @author yuwenxin980214@gmail.com
+ * @date 2021/2/27 19:48
+ */
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
 @DynamicInsert

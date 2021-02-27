@@ -6,7 +6,10 @@ import org.springframework.data.repository.NoRepositoryBean;
 import top.wenxyn.partner.manager.entity.BaseEntity;
 
 import java.io.Serializable;
-
+/**
+ * @author yuwenxin980214@gmail.com
+ * @date 2021/2/27 19:48
+ */
 @NoRepositoryBean
 public interface BaseRepository <T extends BaseEntity, ID>
         extends

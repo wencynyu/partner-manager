@@ -6,7 +6,7 @@ spring:
       ddl-auto: update
   datasource:
     druid:
-      url: jdbc:mysql://localhost:3306/db_partnerManager?useSSL=false&serverTimezone=UTC
+      url: jdbc:mysql://localhost:3306/db_partner_manager?useSSL=false&serverTimezone=UTC
       username: root
       password: aa123456.
 

@@ -12,7 +12,10 @@ import top.wenxyn.partner.manager.entity.vo.PageVO;
 
 import javax.persistence.criteria.*;
 
-
+/**
+ * @author yuwenxin980214@gmail.com
+ * @date 2021/2/27 19:48
+ */
 public abstract class
         AbstractService<T extends BaseEntity, ID, R extends BaseRepository<T, ID>>
     implements Service<T, ID>{
