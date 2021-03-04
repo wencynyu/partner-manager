@@ -24,6 +24,11 @@ public abstract class
     protected R repository;
 
     @Override
+    public long queryCount() {
+        return repository.count();
+    }
+
+    @Override
     public T queryOneById(ID id) {
         return repository.getOne(id);
     }

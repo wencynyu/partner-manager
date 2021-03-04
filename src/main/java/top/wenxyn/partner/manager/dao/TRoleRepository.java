@@ -9,4 +9,5 @@ import top.wenxyn.partner.manager.entity.TAuthRole;
  */
 @Repository
 public interface TRoleRepository extends BaseRepository<TAuthRole, Integer> {
+    TAuthRole findByName(String name);
 }

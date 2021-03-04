@@ -1,14 +1,20 @@
 spring:
+  session:
+    timeout: 1800
+
   jpa:
     database: mysql
-    show-sql: true
+#    show-sql: true
     hibernate:
       ddl-auto: update
+    database-platform: org.hibernate.dialect.MySQL55Dialect
+
   datasource:
     druid:
-      url: jdbc:mysql://localhost:3306/db_partner_manager?useSSL=false&serverTimezone=UTC
+      url: jdbc:mysql://localhost:3306/db_partner_manager?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
       username: root
       password: aa123456.
+      driver-class-name: com.mysql.cj.jdbc.Driver
 
   redis:
     host: localhost

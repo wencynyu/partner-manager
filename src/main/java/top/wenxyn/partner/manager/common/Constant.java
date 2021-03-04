@@ -5,4 +5,10 @@ package top.wenxyn.partner.manager.common;
  */
 public interface Constant {
     int DEFAULT_PAGE_SIZE = 10;
+
+    String VERIFY_CODE_SESSION_NAME = "verifyCode";
+    String USER_DETAILS_SUFFIX = "user_details";
+    String SEPARATE_COMMA = "_";
+
+    String ACTIVE_USER_COUNT = "activeUserCount";
 }

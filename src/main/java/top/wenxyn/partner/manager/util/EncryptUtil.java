@@ -12,4 +12,8 @@ public class EncryptUtil {
     public static String encode(String origin){
         return new BCryptPasswordEncoder().encode(origin);
     }
+
+    public static boolean match(String origin, String password){
+        return new BCryptPasswordEncoder().matches(origin, password);
+    }
 }

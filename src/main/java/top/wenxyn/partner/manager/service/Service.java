@@ -1,18 +1,16 @@
 package top.wenxyn.partner.manager.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import top.wenxyn.partner.manager.dao.BaseRepository;
 import top.wenxyn.partner.manager.entity.BaseEntity;
 import top.wenxyn.partner.manager.entity.vo.PageVO;
 
-import java.io.Serializable;
-import java.util.List;
 /**
  * @author yuwenxin980214@gmail.com
  * @date 2021/2/27 19:48
  */
 public interface Service<T extends BaseEntity, ID> {
+
+    long queryCount();
 
     T queryOneById(ID id);
 
