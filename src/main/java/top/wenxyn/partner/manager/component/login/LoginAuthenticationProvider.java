@@ -3,7 +3,6 @@ package top.wenxyn.partner.manager.component.login;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -12,12 +11,10 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import top.wenxyn.partner.manager.common.Constant;
-import top.wenxyn.partner.manager.dao.TUserRepository;
-import top.wenxyn.partner.manager.entity.TAuthUser;
+import top.wenxyn.partner.manager.repository.auth.TUserRepository;
+import top.wenxyn.partner.manager.entity.dao.auth.TAuthUser;
 import top.wenxyn.partner.manager.service.auth.SystemUserDetailsService;
-import top.wenxyn.partner.manager.util.EncryptUtil;
-import top.wenxyn.partner.manager.util.ResponseUtil;
-import top.wenxyn.partner.manager.util.SerializeUtil;
+import top.wenxyn.partner.manager.util.AuthUtil;
 
 /**
  * @author yuwenxin980214@gmail.com
@@ -45,7 +42,7 @@ public class LoginAuthenticationProvider implements AuthenticationProvider {
         }
 
         UserDetails userDetails = systemUserDetailsService.loadUserByUsername(username);
-        if (!EncryptUtil.match(password, userDetails.getPassword())) {
+        if (!AuthUtil.match(password, userDetails.getPassword())) {
             throw new BadCredentialsException("username or password incorrect");
         }
 
@@ -53,7 +50,6 @@ public class LoginAuthenticationProvider implements AuthenticationProvider {
         TAuthUser loginUser = tUserRepository.findByUsername(username);
         loginUser.setLoginTryTimes(0);
         tUserRepository.save(loginUser);
-        stringRedisTemplate.opsForValue().set(username + USER_DETAILS_SUFFIX, SerializeUtil.obj2String(loginUser));
 
         return new UsernamePasswordAuthenticationToken(userDetails, userDetails.getPassword(), userDetails.getAuthorities());
     }

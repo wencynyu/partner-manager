@@ -6,8 +6,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import top.wenxyn.partner.manager.common.Constant;
-import top.wenxyn.partner.manager.dao.BaseRepository;
-import top.wenxyn.partner.manager.entity.BaseEntity;
+import top.wenxyn.partner.manager.repository.BaseRepository;
+import top.wenxyn.partner.manager.entity.dao.BaseEntity;
 import top.wenxyn.partner.manager.entity.vo.PageVO;
 
 import javax.persistence.criteria.*;
@@ -81,6 +81,11 @@ public abstract class
     @Override
     public void delete(T t) {
         repository.delete(t);
+    }
+
+    @Override
+    public void deleteById(ID id) {
+        repository.deleteById(id);
     }
 
     @Override

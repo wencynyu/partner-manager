@@ -9,7 +9,7 @@ import java.net.http.HttpRequest;
  * @author yuwenxin980214@gmail.com
  * @date 2021/3/5 1:38
  */
-public class RequestUtil {
+public final class RequestUtil {
 
     public static String getRequestBody(HttpServletRequest request) throws IOException {
         BufferedReader br = request.getReader();

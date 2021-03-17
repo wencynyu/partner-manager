@@ -5,8 +5,8 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import top.wenxyn.partner.manager.dao.TUserRepository;
-import top.wenxyn.partner.manager.entity.TAuthUser;
+import top.wenxyn.partner.manager.repository.auth.TUserRepository;
+import top.wenxyn.partner.manager.entity.dao.auth.TAuthUser;
 
 
 @SpringBootTest

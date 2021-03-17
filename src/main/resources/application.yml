@@ -2,12 +2,21 @@ spring:
   session:
     timeout: 1800
 
+  data:
+    redis:
+      repositories:
+        enabled: false
+    jdbc:
+      repositories:
+        enabled: false
+
   jpa:
     database: mysql
 #    show-sql: true
     hibernate:
       ddl-auto: update
     database-platform: org.hibernate.dialect.MySQL55Dialect
+    open-in-view: true
 
   datasource:
     druid:
@@ -19,3 +28,22 @@ spring:
   redis:
     host: localhost
     port: 6379
+
+  mail:
+    host: smtp.qq.com
+    port: 465
+    username: 1351819147@qq.com
+    password: qytuzoenxtxzidie
+    properties:
+      mail:
+        smtp:
+          ssl:
+            enable: true
+
+server:
+  tomcat:
+    threads:
+      max: 1024
+      min-spare: 256
+    accept-count: 512
+    max-connections: 4096

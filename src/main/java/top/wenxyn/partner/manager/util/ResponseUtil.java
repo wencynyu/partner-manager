@@ -14,7 +14,7 @@ import java.io.PrintWriter;
  * @author yuwenxin980214@gmail.com
  * @date 2021/2/27 19:48
  */
-public class ResponseUtil {
+public final class ResponseUtil {
 
     public static ResponseEntity errorResponse(HttpStatus status){
         return ResponseEntity.status(status).body(status.getReasonPhrase());

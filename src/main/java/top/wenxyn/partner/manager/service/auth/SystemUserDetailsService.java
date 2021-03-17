@@ -10,8 +10,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import top.wenxyn.partner.manager.common.Constant;
-import top.wenxyn.partner.manager.dao.*;
-import top.wenxyn.partner.manager.entity.*;
+import top.wenxyn.partner.manager.repository.auth.*;
+import top.wenxyn.partner.manager.entity.dao.auth.*;
 import top.wenxyn.partner.manager.util.QueryUtil;
 import top.wenxyn.partner.manager.util.SerializeUtil;
 
@@ -25,7 +25,6 @@ import java.util.stream.Collectors;
  */
 @Service
 public class SystemUserDetailsService implements UserDetailsService {
-
     private static final String ROLE_PREFIX = "ROLE_";
     private static final String PERMISSION_PREFIX = "PERMISSION_";
 
@@ -80,6 +79,7 @@ public class SystemUserDetailsService implements UserDetailsService {
         roles.forEach(tAuthRole -> grantedAuthorities.add(new SimpleGrantedAuthority(convertToRole(tAuthRole.getName()))));
         permissions.forEach(tAuthPermission -> grantedAuthorities.add(new SimpleGrantedAuthority(convertToPermission(tAuthPermission.getName()))));
         SystemUser user = SystemUser.builder().username(authUser.getUsername())
+                .id(authUser.getId())
                 .password(authUser.getPassword())
                 .enabled(authUser.getStatus() == 0)
                 .accountNonLocked(authUser.getLoginTryTimes() <= 5)

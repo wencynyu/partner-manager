@@ -11,7 +11,7 @@ import java.util.Random;
  * @author yuwenxin980214@gmail.com
  * @date 2021/3/6 22:07
  */
-public class VerifyCodeUtil {
+public final class VerifyCodeUtil {
     private int weight = 100;           //验证码图片的长和宽
     private int height = 40;
     private String text;                //用来保存验证码的文本内容
@@ -27,8 +27,6 @@ public class VerifyCodeUtil {
 
     /**
      * 获取随机的颜色
-     *
-     * @return
      */
     private Color randomColor() {
         int r = this.r.nextInt(225);  //这里为什么是225，因为当r，g，b都为255时，即为白色，为了好辨认，需要颜色深一点。
@@ -39,8 +37,6 @@ public class VerifyCodeUtil {
 
     /**
      * 获取随机字体
-     *
-     * @return
      */
     private Font randomFont() {
         int index = r.nextInt(fontNames.length);  //获取随机的字体
@@ -52,8 +48,6 @@ public class VerifyCodeUtil {
 
     /**
      * 获取随机字符
-     *
-     * @return
      */
     private char randomChar() {
         int index = r.nextInt(codes.length());
@@ -62,8 +56,6 @@ public class VerifyCodeUtil {
 
     /**
      * 画干扰线，验证码干扰线用来防止计算机解析图片
-     *
-     * @param image
      */
     private void drawLine(BufferedImage image) {
         int num = r.nextInt(10); //定义干扰线的数量
@@ -80,8 +72,6 @@ public class VerifyCodeUtil {
 
     /**
      * 创建图片的方法
-     *
-     * @return
      */
     private BufferedImage createImage() {
         //创建图片缓冲区
@@ -97,8 +87,6 @@ public class VerifyCodeUtil {
 
     /**
      * 获取验证码图片的方法
-     *
-     * @return
      */
     private BufferedImage setImage() {
         BufferedImage image = createImage();

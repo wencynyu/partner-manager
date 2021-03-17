@@ -5,26 +5,21 @@ import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import top.wenxyn.partner.manager.common.Constant;
-import top.wenxyn.partner.manager.component.SessionListener;
-import top.wenxyn.partner.manager.entity.TAuthUser;
+import top.wenxyn.partner.manager.entity.dao.auth.TAuthUser;
 import top.wenxyn.partner.manager.exception.RegisterException;
-import top.wenxyn.partner.manager.service.UserService;
-import top.wenxyn.partner.manager.util.EncryptUtil;
+import top.wenxyn.partner.manager.service.auth.UserService;
 import top.wenxyn.partner.manager.util.ResponseUtil;
 import top.wenxyn.partner.manager.util.VerifyCodeUtil;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.Map;
 import java.util.Optional;
 
 /**
@@ -40,7 +35,7 @@ public class HomeController {
     private UserService userService;
 
     @Autowired
-    private RedisTemplate<String, Integer> redisTemplate;
+    private StringRedisTemplate stringRedisTemplate;
 
     @ApiOperation("用户注册接口")
     @PostMapping("/register")
@@ -86,7 +81,7 @@ public class HomeController {
     @GetMapping("/getActiveUserCount")
     public ResponseEntity getActiveUserCount(){
         return ResponseEntity.ok(Optional
-                .ofNullable(redisTemplate.opsForValue().get(Constant.ACTIVE_USER_COUNT))
-                .orElse(0));
+                .ofNullable(stringRedisTemplate.opsForValue().get(Constant.ACTIVE_USER_COUNT))
+                .orElse("0"));
     }
 }

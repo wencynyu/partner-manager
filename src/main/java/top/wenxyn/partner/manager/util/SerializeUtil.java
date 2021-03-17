@@ -15,7 +15,7 @@ import java.text.SimpleDateFormat;
  * @date 2021/2/27 19:48
  */
 @Slf4j
-public class SerializeUtil {
+public final class SerializeUtil {
 
     private static ObjectMapper objectMapper = new ObjectMapper();
 

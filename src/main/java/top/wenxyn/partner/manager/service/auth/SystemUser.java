@@ -16,6 +16,7 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 public class SystemUser implements UserDetails {
+    private Integer id;
     private String password;
     private String username;
     private Set<GrantedAuthority> authorities;
@@ -23,6 +24,14 @@ public class SystemUser implements UserDetails {
     private boolean accountNonLocked;
     private boolean credentialsNonExpired;
     private boolean enabled;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     @Override
     public String getPassword() {
@@ -85,5 +94,19 @@ public class SystemUser implements UserDetails {
 
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
+    }
+
+    @Override
+    public String toString() {
+        return "SystemUser{" +
+                "id=" + id +
+                ", password='" + password + '\'' +
+                ", username='" + username + '\'' +
+                ", authorities=" + authorities +
+                ", accountNonExpired=" + accountNonExpired +
+                ", accountNonLocked=" + accountNonLocked +
+                ", credentialsNonExpired=" + credentialsNonExpired +
+                ", enabled=" + enabled +
+                '}';
     }
 }

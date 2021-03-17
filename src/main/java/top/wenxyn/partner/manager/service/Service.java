@@ -1,7 +1,7 @@
 package top.wenxyn.partner.manager.service;
 
 import org.springframework.data.domain.Page;
-import top.wenxyn.partner.manager.entity.BaseEntity;
+import top.wenxyn.partner.manager.entity.dao.BaseEntity;
 import top.wenxyn.partner.manager.entity.vo.PageVO;
 
 /**
@@ -21,6 +21,8 @@ public interface Service<T extends BaseEntity, ID> {
     T update(T t);
 
     T insert(T t);
+
+    void deleteById(ID id);
 
     void delete(T t);
 

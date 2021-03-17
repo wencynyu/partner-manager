@@ -1,17 +1,14 @@
 package top.wenxyn.partner.manager.component.login;
 
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-import org.springframework.security.web.util.matcher.RequestMatcher;
 import org.springframework.stereotype.Component;
 import top.wenxyn.partner.manager.common.Constant;
-import top.wenxyn.partner.manager.entity.TAuthUser;
 import top.wenxyn.partner.manager.entity.vo.LoginUserVO;
 import top.wenxyn.partner.manager.util.RequestUtil;
 import top.wenxyn.partner.manager.util.SerializeUtil;

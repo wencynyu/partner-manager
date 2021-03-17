@@ -1,7 +1,7 @@
 package top.wenxyn.partner.manager.component;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
 import top.wenxyn.partner.manager.common.Constant;
 
@@ -16,20 +16,20 @@ import javax.servlet.http.HttpSessionListener;
 @Component
 public class SessionListener implements HttpSessionListener {
     @Autowired
-    private RedisTemplate<String, Integer> redisTemplate;
+    private StringRedisTemplate stringRedisTemplate;
 
     @PostConstruct
     public void init(){
-        redisTemplate.opsForValue().setIfAbsent(Constant.ACTIVE_USER_COUNT, 0);
+        stringRedisTemplate.opsForValue().setIfAbsent(Constant.ACTIVE_USER_COUNT, String.valueOf(0));
     }
 
     @Override
     public void sessionCreated(HttpSessionEvent se) {
-        redisTemplate.opsForValue().increment(Constant.ACTIVE_USER_COUNT);
+        stringRedisTemplate.opsForValue().increment(Constant.ACTIVE_USER_COUNT);
     }
 
     @Override
     public void sessionDestroyed(HttpSessionEvent se) {
-        redisTemplate.opsForValue().decrement(Constant.ACTIVE_USER_COUNT);
+        stringRedisTemplate.opsForValue().decrement(Constant.ACTIVE_USER_COUNT);
     }
 }
