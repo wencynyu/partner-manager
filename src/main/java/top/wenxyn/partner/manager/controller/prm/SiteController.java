@@ -8,10 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import top.wenxyn.partner.manager.entity.dao.prm.TPrmPartner;
 import top.wenxyn.partner.manager.entity.dao.prm.TPrmSite;
 import top.wenxyn.partner.manager.entity.vo.PageVO;
@@ -40,6 +37,45 @@ public class SiteController {
             return ResponseEntity.ok(tPrmSites);
         }catch (Exception e){
             log.error("getAllPartnerByPageVO fail, error message:{}", e.getMessage());
+        }
+        return ResponseUtil.errorResponse(HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @ApiOperation("更新站点信息")
+    @PreAuthorize("hasAnyAuthority('PERMISSION_updateSite')")
+    @PostMapping("updateSite")
+    public ResponseEntity updateSite(@RequestBody TPrmSite tPrmSite){
+        try {
+            TPrmSite update = siteService.update(tPrmSite);
+            return ResponseEntity.ok(update);
+        }catch (Exception e){
+            log.error("getAllPartnerByPageVO fail, error message:{}", e.getMessage());
+        }
+        return ResponseUtil.errorResponse(HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @ApiOperation("新增站点信息")
+    @PreAuthorize("hasAnyAuthority('PERMISSION_createSite')")
+    @PostMapping("createSite")
+    public ResponseEntity createSite(@RequestBody TPrmSite tPrmSite){
+        try {
+            TPrmSite insert = siteService.insert(tPrmSite);
+            return ResponseEntity.ok(insert);
+        }catch (Exception e){
+            log.error("getAllPartnerByPageVO fail, error message:{}", e.getMessage());
+        }
+        return ResponseUtil.errorResponse(HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @ApiOperation("删除操作")
+    @PreAuthorize("hasAnyAuthority('PERMISSION_delete')")
+    @DeleteMapping("delete")
+    public ResponseEntity delete(@RequestParam Integer id){
+        try {
+            siteService.deleteById(id);
+            return ResponseEntity.ok("delete success");
+        }catch (Exception e){
+            log.error("delete error : {}", e.getMessage());
         }
         return ResponseUtil.errorResponse(HttpStatus.INTERNAL_SERVER_ERROR);
     }

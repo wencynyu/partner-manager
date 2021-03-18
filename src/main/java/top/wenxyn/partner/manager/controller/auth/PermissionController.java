@@ -48,7 +48,7 @@ public class PermissionController {
             TAuthPermission insert = permissionService.addPermission(permission);
             return ResponseEntity.ok(insert);
         }catch (Exception e){
-            log.error("user insert fail, error message:{}", e.getMessage());
+            log.error("permission insert fail, error message:{}", e.getMessage());
         }
         return ResponseUtil.errorResponse(HttpStatus.INTERNAL_SERVER_ERROR);
     }

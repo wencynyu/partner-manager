@@ -1,6 +1,9 @@
 package top.wenxyn.partner.manager.service.prm;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import top.wenxyn.partner.manager.entity.dao.prm.TPrmPartner;
+import top.wenxyn.partner.manager.repository.prm.TPartnerRepository;
 import top.wenxyn.partner.manager.repository.prm.TPaymentAddressRepository;
 import top.wenxyn.partner.manager.entity.dao.prm.TPrmPaymentAddress;
 import top.wenxyn.partner.manager.service.AbstractService;
@@ -14,4 +17,13 @@ import javax.transaction.Transactional;
 @Service
 @Transactional
 public class PaymentAddressService extends AbstractService<TPrmPaymentAddress, Integer, TPaymentAddressRepository> {
+    @Autowired
+    private TPartnerRepository tPartnerRepository;
+
+    public TPrmPaymentAddress bindPaymentAddressInfo(TPrmPaymentAddress tPrmPaymentAddress, TPrmPartner tPrmPartner) {
+        TPrmPaymentAddress save = repository.save(tPrmPaymentAddress);
+        tPrmPartner.setPaymentAddressId(tPrmPaymentAddress.getId());
+        tPartnerRepository.save(tPrmPartner);
+        return save;
+    }
 }

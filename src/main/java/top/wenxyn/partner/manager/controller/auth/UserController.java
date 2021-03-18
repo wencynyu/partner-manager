@@ -96,7 +96,7 @@ public class UserController {
         return ResponseUtil.errorResponse(HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
-    @ApiOperation("更新操作")
+    @ApiOperation("修改密码")
     @PreAuthorize("hasAnyAuthority('PERMISSION_changePassword')")
     @PostMapping("changePassword")
     public ResponseEntity changePassword(@RequestParam String oldPassword,
@@ -106,6 +106,20 @@ public class UserController {
             return ResponseEntity.ok("change password success");
         }catch (Exception e){
             log.error("delete error : {}", e.getMessage());
+        }
+        return ResponseUtil.errorResponse(HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @ApiOperation("修改用户信息")
+    @PreAuthorize("hasAnyAuthority('PERMISSION_updateUser')")
+    @PostMapping("updateUser")
+    public ResponseEntity updateUser(@RequestBody TAuthUser user){
+
+        try {
+            TAuthUser update = userService.update(user);
+            return ResponseEntity.ok(update);
+        }catch (Exception e){
+            log.error("user update fail, error message:{}", e.getMessage());
         }
         return ResponseUtil.errorResponse(HttpStatus.INTERNAL_SERVER_ERROR);
     }

@@ -4,8 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import top.wenxyn.partner.manager.common.Constant;
 import top.wenxyn.partner.manager.component.EmailService;
+import top.wenxyn.partner.manager.entity.dao.prm.TPrmBank;
+import top.wenxyn.partner.manager.entity.dao.prm.TPrmPaymentAddress;
+import top.wenxyn.partner.manager.repository.prm.TBankRepository;
 import top.wenxyn.partner.manager.repository.prm.TPartnerRepository;
 import top.wenxyn.partner.manager.entity.dao.prm.TPrmPartner;
+import top.wenxyn.partner.manager.repository.prm.TPaymentAddressRepository;
 import top.wenxyn.partner.manager.service.AbstractService;
 import top.wenxyn.partner.manager.service.auth.SystemUser;
 import top.wenxyn.partner.manager.util.AuthUtil;
@@ -24,14 +28,30 @@ public class PartnerService extends AbstractService<TPrmPartner, Integer, TPartn
     @Autowired
     private EmailService emailService;
 
+    @Autowired
+    private TBankRepository tBankRepository;
+
+    @Autowired
+    private TPaymentAddressRepository tPaymentAddressRepository;
+
     private static final String APPLY_EMAIL_SUBJECT = "你好，有一份合作方申请请注意查收";
 
-    public TPrmPartner bindWithUser(TPrmPartner tPrmPartner) {
+    public TPrmPartner bindWithUser(TPrmPartner tPrmPartner, TPrmBank tPrmBank, TPrmPaymentAddress tPrmPaymentAddress) {
         SystemUser curUser = AuthUtil.getCurUser();
         Integer userId = curUser.getId();
         tPrmPartner.setUid(userId);
         tPrmPartner.setState(Constant.PartnerState.POTENTIAL.getState());
-        return repository.save(tPrmPartner);
+        tPrmPartner.setBankId(tPrmBank.getId());
+        tPrmPartner.setPaymentAddressId(tPrmPaymentAddress.getId());
+        TPrmPartner save = repository.save(tPrmPartner);
+
+        tPrmBank.setPartnerId(tPrmPartner.getId());
+        tBankRepository.save(tPrmBank);
+
+        tPrmPaymentAddress.setPartnerId(tPrmPartner.getId());
+        tPaymentAddressRepository.save(tPrmPaymentAddress);
+
+        return save;
     }
 
     public TPrmPartner applyToFormalPartner(TPrmPartner tPrmPartner) {

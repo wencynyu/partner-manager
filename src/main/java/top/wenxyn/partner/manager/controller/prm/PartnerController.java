@@ -11,7 +11,9 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
+import top.wenxyn.partner.manager.entity.dao.prm.TPrmBank;
 import top.wenxyn.partner.manager.entity.dao.prm.TPrmPartner;
+import top.wenxyn.partner.manager.entity.dao.prm.TPrmPaymentAddress;
 import top.wenxyn.partner.manager.entity.vo.PageVO;
 import top.wenxyn.partner.manager.service.auth.SystemUser;
 import top.wenxyn.partner.manager.service.prm.BankService;
@@ -52,9 +54,11 @@ public class PartnerController {
 
     @ApiOperation("绑定合作方企业")
     @PostMapping("bindPartnerWithUser")
-    public ResponseEntity bindPartnerWithUser(@RequestBody TPrmPartner tPrmPartner){
+    public ResponseEntity bindPartnerWithUser(@RequestBody TPrmPartner tPrmPartner,
+                                              @RequestBody TPrmBank tPrmBank,
+                                              @RequestBody TPrmPaymentAddress tPrmPaymentAddress){
         try {
-            TPrmPartner potentialPartner = partnerService.bindWithUser(tPrmPartner);
+            TPrmPartner potentialPartner = partnerService.bindWithUser(tPrmPartner, tPrmBank, tPrmPaymentAddress);
             return ResponseEntity.ok(potentialPartner);
         }catch (Exception e){
             log.error("bindPartnerWithUser fail, error message:{}", e.getMessage());
@@ -74,6 +78,19 @@ public class PartnerController {
         return ResponseUtil.errorResponse(HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
+    @ApiOperation("修改合作方信息")
+    @PreAuthorize("hasAnyAuthority('PERMISSION_updatePartner')")
+    @PostMapping("updatePartner")
+    public ResponseEntity updatePartner(@RequestBody TPrmPartner tPrmPartner){
+        try {
+            TPrmPartner update = partnerService.update(tPrmPartner);
+            return ResponseEntity.ok(update);
+        }catch (Exception e){
+            log.error("delete error : {}", e.getMessage());
+        }
+        return ResponseUtil.errorResponse(HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
     @ApiOperation("删除操作")
     @PreAuthorize("hasAnyAuthority('PERMISSION_delete')")
     @DeleteMapping("delete")
@@ -83,6 +100,32 @@ public class PartnerController {
             return ResponseEntity.ok("delete success");
         }catch (Exception e){
             log.error("delete error : {}", e.getMessage());
+        }
+        return ResponseUtil.errorResponse(HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @ApiOperation("修改合作方绑定银行账户信息")
+    @PreAuthorize("hasAnyAuthority('PERMISSION_updateBankInfo')")
+    @PostMapping("updateBankInfo")
+    public ResponseEntity updateBankInfo(@RequestBody TPrmBank tPrmBank){
+        try {
+            TPrmBank update = bankService.update(tPrmBank);
+            return ResponseEntity.ok(update);
+        }catch (Exception e){
+            log.error("updateBankInfo error : {}", e.getMessage());
+        }
+        return ResponseUtil.errorResponse(HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @ApiOperation("修改合作方绑定支付信息")
+    @PreAuthorize("hasAnyAuthority('PERMISSION_updatePaymentAddressInfo')")
+    @PostMapping("updatePaymentAddressInfo")
+    public ResponseEntity updatePaymentAddressInfo(@RequestBody TPrmPaymentAddress tPrmPaymentAddress){
+        try {
+            TPrmPaymentAddress update = paymentAddressService.update(tPrmPaymentAddress);
+            return ResponseEntity.ok(update);
+        }catch (Exception e){
+            log.error("bindPaymentAddressInfo error : {}", e.getMessage());
         }
         return ResponseUtil.errorResponse(HttpStatus.INTERNAL_SERVER_ERROR);
     }

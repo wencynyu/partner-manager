@@ -49,7 +49,21 @@ public class MenuController {
             TAuthMenu insert = menuService.insert(menu);
             return ResponseEntity.ok(insert);
         }catch (Exception e){
-            log.error("user insert fail, error message:{}", e.getMessage());
+            log.error("menu insert fail, error message:{}", e.getMessage());
+        }
+        return ResponseUtil.errorResponse(HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @ApiOperation("修改菜单信息")
+    @PreAuthorize("hasAnyAuthority('PERMISSION_updateMenu')")
+    @PostMapping("updateMenu")
+    public ResponseEntity updateMenu(@RequestBody TAuthMenu menu){
+
+        try {
+            TAuthMenu update = menuService.update(menu);
+            return ResponseEntity.ok(update);
+        }catch (Exception e){
+            log.error("menu update fail, error message:{}", e.getMessage());
         }
         return ResponseUtil.errorResponse(HttpStatus.INTERNAL_SERVER_ERROR);
     }
