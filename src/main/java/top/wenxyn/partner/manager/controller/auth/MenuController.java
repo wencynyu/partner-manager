@@ -14,6 +14,8 @@ import top.wenxyn.partner.manager.entity.vo.PageVO;
 import top.wenxyn.partner.manager.service.auth.MenuService;
 import top.wenxyn.partner.manager.util.ResponseUtil;
 
+import java.util.List;
+
 /**
  * @author yuwenxin980214@gmail.com
  * @date 2021/3/6 23:10
@@ -28,7 +30,7 @@ public class MenuController {
     private MenuService menuService;
 
     @ApiOperation("分页获取全部菜单信息")
-    @PreAuthorize("hasAnyAuthority('PERMISSION_getAllMenuByPageVO')")
+    @PreAuthorize("hasAnyAuthority('PERMISSION_getAllMenuByPageVO') || hasAnyRole('ROLE_admin')")
     @PostMapping("getAllMenuByPageVO")
     public ResponseEntity getAllMenuByPageVO(@RequestBody PageVO pageVO){
         try {
@@ -40,8 +42,21 @@ public class MenuController {
         return ResponseUtil.errorResponse(HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
+    @ApiOperation("获取用户的全部菜单信息")
+    @PreAuthorize("hasAnyAuthority('PERMISSION_getAllMenu') || hasAnyRole('ROLE_admin')")
+    @PostMapping("getAllMenu")
+    public ResponseEntity getAllMenu(){
+        try {
+            List<TAuthMenu> tAuthMenus = menuService.queryAllByUser();
+            return ResponseEntity.ok(tAuthMenus);
+        }catch (Exception e){
+            log.error("getAllMenuByPageVO fail, error message:{}", e.getMessage());
+        }
+        return ResponseUtil.errorResponse(HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
     @ApiOperation("添加新菜单")
-    @PreAuthorize("hasAnyAuthority('PERMISSION_addMenu')")
+    @PreAuthorize("hasAnyAuthority('PERMISSION_addMenu') || hasAnyRole('ROLE_admin')")
     @PostMapping("addMenu")
     public ResponseEntity addMenu(@RequestBody TAuthMenu menu){
 
@@ -55,7 +70,7 @@ public class MenuController {
     }
 
     @ApiOperation("修改菜单信息")
-    @PreAuthorize("hasAnyAuthority('PERMISSION_updateMenu')")
+    @PreAuthorize("hasAnyAuthority('PERMISSION_updateMenu') || hasAnyRole('ROLE_admin')")
     @PostMapping("updateMenu")
     public ResponseEntity updateMenu(@RequestBody TAuthMenu menu){
 
@@ -69,7 +84,7 @@ public class MenuController {
     }
 
     @ApiOperation("删除操作")
-    @PreAuthorize("hasAnyAuthority('PERMISSION_delete')")
+    @PreAuthorize("hasAnyAuthority('PERMISSION_delete') || hasAnyRole('ROLE_admin')")
     @DeleteMapping("delete")
     public ResponseEntity delete(@RequestParam Integer id){
         try {

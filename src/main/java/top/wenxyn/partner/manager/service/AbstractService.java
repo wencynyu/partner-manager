@@ -1,6 +1,7 @@
 package top.wenxyn.partner.manager.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -9,8 +10,10 @@ import top.wenxyn.partner.manager.common.Constant;
 import top.wenxyn.partner.manager.repository.BaseRepository;
 import top.wenxyn.partner.manager.entity.dao.BaseEntity;
 import top.wenxyn.partner.manager.entity.vo.PageVO;
+import top.wenxyn.partner.manager.util.JPAUtil;
 
 import javax.persistence.criteria.*;
+import java.util.Optional;
 
 /**
  * @author yuwenxin980214@gmail.com
@@ -64,7 +67,7 @@ public abstract class
                         Constant.DEFAULT_PAGE_SIZE,
                         Sort.by(
                                 (pageVO.getAsc() != null && pageVO.getAsc()) ? Sort.Direction.ASC : Sort.Direction.DESC,
-                                pageVO.getSortedFields().toArray(new String[0])));
+                                pageVO.getSortedFields() != null ? pageVO.getSortedFields().toArray(new String[0]) : new String[]{"id"}));
         return repository.findAll(pageRequest);
     }
 
@@ -75,7 +78,14 @@ public abstract class
 
     @Override
     public T update(T t) {
-        return repository.save(t);
+        Optional<T> one = repository.findById((ID) t.getId());
+        if (one.isPresent()){
+            T t1 = one.get();
+            JPAUtil.copyNotNullProperties(t, t1);
+            repository.save(t1);
+            return t1;
+        }
+        return null;
     }
 
     @Override

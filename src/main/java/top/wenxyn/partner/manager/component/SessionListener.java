@@ -1,5 +1,6 @@
 package top.wenxyn.partner.manager.component;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
@@ -14,6 +15,7 @@ import javax.servlet.http.HttpSessionListener;
  * @date 2021/3/5 1:12
  */
 @Component
+@Slf4j
 public class SessionListener implements HttpSessionListener {
     @Autowired
     private StringRedisTemplate stringRedisTemplate;

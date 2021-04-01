@@ -34,7 +34,7 @@ public class RoleController {
     private RoleService roleService;
 
     @ApiOperation("分页获取全部角色信息")
-    @PreAuthorize("hasAnyAuthority('PERMISSION_getAllRoleByPageVO')")
+    @PreAuthorize("hasAnyAuthority('PERMISSION_getAllRoleByPageVO') || hasAnyRole('ROLE_admin')")
     @PostMapping("getAllRoleByPageVO")
     public ResponseEntity getAllRoleByPageVO(@RequestBody PageVO pageVO){
         try {
@@ -47,7 +47,7 @@ public class RoleController {
     }
 
     @ApiOperation("添加新角色")
-    @PreAuthorize("hasAnyAuthority('PERMISSION_addRole')")
+    @PreAuthorize("hasAnyAuthority('PERMISSION_addRole') || hasAnyRole('ROLE_admin')")
     @PostMapping("addRole")
     public ResponseEntity addRole(@RequestBody TAuthRole role){
 
@@ -62,7 +62,7 @@ public class RoleController {
 
 
     @ApiOperation("添加角色与权限的绑定信息")
-    @PreAuthorize("hasAnyAuthority('PERMISSION_addRolePermissionRelation')")
+    @PreAuthorize("hasAnyAuthority('PERMISSION_addRolePermissionRelation') || hasAnyRole('ROLE_admin')")
     @PostMapping("addRolePermissionRelation")
     public ResponseEntity addRolePermissionRelation(@RequestBody Set<Integer> roleIds,
                                                     @RequestBody Set<Integer> permissionIds){
@@ -86,7 +86,7 @@ public class RoleController {
 
 
     @ApiOperation("添加角色与菜单的绑定信息")
-    @PreAuthorize("hasAnyAuthority('PERMISSION_addRoleMenuRelation')")
+    @PreAuthorize("hasAnyAuthority('PERMISSION_addRoleMenuRelation') || hasAnyRole('ROLE_admin')")
     @PostMapping("addRoleMenuRelation")
     public ResponseEntity addRoleMenuRelation(@RequestBody Set<Integer> roleIds,
                                               @RequestBody Set<Integer> menuIds){
@@ -109,7 +109,7 @@ public class RoleController {
     }
 
     @ApiOperation("删除操作")
-    @PreAuthorize("hasAnyAuthority('PERMISSION_delete')")
+    @PreAuthorize("hasAnyAuthority('PERMISSION_delete') || hasAnyRole('ROLE_admin')")
     @DeleteMapping("delete")
     public ResponseEntity delete(@RequestParam Integer id){
         try {

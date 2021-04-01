@@ -27,7 +27,7 @@ public class PermissionController {
     private PermissionService permissionService;
 
     @ApiOperation("分页获取全部权限信息")
-    @PreAuthorize("hasAnyAuthority('PERMISSION_getAllPermissionByPageVO')")
+    @PreAuthorize("hasAnyAuthority('PERMISSION_getAllPermissionByPageVO') || hasAnyRole('ROLE_admin')")
     @PostMapping("getAllPermissionByPageVO")
     public ResponseEntity getAllPermissionByPageVO(@RequestBody PageVO pageVO){
         try {
@@ -40,7 +40,7 @@ public class PermissionController {
     }
 
     @ApiOperation("添加新权限")
-    @PreAuthorize("hasAnyAuthority('PERMISSION_addPermission')")
+    @PreAuthorize("hasAnyAuthority('PERMISSION_addPermission') || hasAnyRole('ROLE_admin')")
     @PostMapping("addPermission")
     public ResponseEntity addPermission(@RequestBody TAuthPermission permission){
 
@@ -54,7 +54,7 @@ public class PermissionController {
     }
 
     @ApiOperation("删除操作")
-    @PreAuthorize("hasAnyAuthority('PERMISSION_delete')")
+    @PreAuthorize("hasAnyAuthority('PERMISSION_delete') || hasAnyRole('ROLE_admin')")
     @DeleteMapping("delete")
     public ResponseEntity delete(@RequestParam Integer id){
         try {

@@ -28,7 +28,7 @@ public class ContractController {
     private ContractService contractService;
 
     @ApiOperation("分页获取全部合同信息")
-    @PreAuthorize("hasAnyAuthority('PERMISSION_getAllContractByPageVO')")
+    @PreAuthorize("hasAnyAuthority('PERMISSION_getAllContractByPageVO') || hasAnyRole('ROLE_admin')")
     @PostMapping("getAllContractByPageVO")
     public ResponseEntity getAllContractByPageVO(@RequestBody PageVO pageVO){
         try {
@@ -41,7 +41,7 @@ public class ContractController {
     }
 
     @ApiOperation("创建一个新合同")
-    @PreAuthorize("hasAnyAuthority('PERMISSION_createContract')")
+    @PreAuthorize("hasAnyAuthority('PERMISSION_createContract') || hasAnyRole('ROLE_admin')")
     @PostMapping("createContract")
     public ResponseEntity createContract(@RequestBody TPrmContract tPrmContract,
                                          @RequestBody Integer partnerId){
@@ -55,7 +55,7 @@ public class ContractController {
     }
 
     @ApiOperation("删除操作")
-    @PreAuthorize("hasAnyAuthority('PERMISSION_delete')")
+    @PreAuthorize("hasAnyAuthority('PERMISSION_delete') || hasAnyRole('ROLE_admin')")
     @DeleteMapping("delete")
     public ResponseEntity delete(@RequestParam Integer id){
         try {

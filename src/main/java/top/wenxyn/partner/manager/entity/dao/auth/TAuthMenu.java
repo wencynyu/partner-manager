@@ -41,4 +41,7 @@ public class TAuthMenu extends BaseEntity {
 
     @Transient
     private Set<TAuthRole> roles;
+
+    @Transient
+    private Set<TAuthMenu> childMenus;
 }

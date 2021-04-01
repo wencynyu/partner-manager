@@ -15,7 +15,9 @@ import org.springframework.stereotype.Component;
 @Slf4j
 @Component
 public class LogAspect {
-    @Pointcut("execution(public * top.wenxyn.partner.manager.controller.*.*(..))")
+    @Pointcut("execution(public * top.wenxyn.partner.manager.controller.*.*(..)) ||" +
+            " execution(public * top.wenxyn.partner.manager.controller.prm.*.*(..)) ||" +
+            "execution(public * top.wenxyn.partner.manager.controller.auth.*.*(..))")
     public void controllerPoint(){
     }
 

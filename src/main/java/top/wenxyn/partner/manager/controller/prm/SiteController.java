@@ -29,20 +29,20 @@ public class SiteController {
     private SiteService siteService;
 
     @ApiOperation("分页获取全部合作方站点信息")
-    @PreAuthorize("hasAnyAuthority('PERMISSION_getAllSiteByPageVO')")
+    @PreAuthorize("hasAnyAuthority('PERMISSION_getAllSiteByPageVO') || hasAnyRole('ROLE_admin')")
     @PostMapping("getAllSiteByPageVO")
     public ResponseEntity getAllSiteByPageVO(@RequestBody PageVO pageVO){
         try {
             Page<TPrmSite> tPrmSites = siteService.queryAllByPage(pageVO);
             return ResponseEntity.ok(tPrmSites);
         }catch (Exception e){
-            log.error("getAllPartnerByPageVO fail, error message:{}", e.getMessage());
+            log.error("getAllSiteByPageVO fail, error message:{}", e.getMessage());
         }
         return ResponseUtil.errorResponse(HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @ApiOperation("更新站点信息")
-    @PreAuthorize("hasAnyAuthority('PERMISSION_updateSite')")
+    @PreAuthorize("hasAnyAuthority('PERMISSION_updateSite') || hasAnyRole('ROLE_admin')")
     @PostMapping("updateSite")
     public ResponseEntity updateSite(@RequestBody TPrmSite tPrmSite){
         try {
@@ -55,7 +55,7 @@ public class SiteController {
     }
 
     @ApiOperation("新增站点信息")
-    @PreAuthorize("hasAnyAuthority('PERMISSION_createSite')")
+    @PreAuthorize("hasAnyAuthority('PERMISSION_createSite') || hasAnyRole('ROLE_admin')")
     @PostMapping("createSite")
     public ResponseEntity createSite(@RequestBody TPrmSite tPrmSite){
         try {
@@ -68,7 +68,7 @@ public class SiteController {
     }
 
     @ApiOperation("删除操作")
-    @PreAuthorize("hasAnyAuthority('PERMISSION_delete')")
+    @PreAuthorize("hasAnyAuthority('PERMISSION_delete') || hasAnyRole('ROLE_admin')")
     @DeleteMapping("delete")
     public ResponseEntity delete(@RequestParam Integer id){
         try {

@@ -1,10 +1,12 @@
 package top.wenxyn.partner.manager.component;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Component;
+import org.springframework.util.CollectionUtils;
 import top.wenxyn.partner.manager.repository.auth.TRoleRepository;
 import top.wenxyn.partner.manager.repository.auth.TUserRepository;
 import top.wenxyn.partner.manager.repository.auth.TUserRoleRepository;
@@ -43,7 +45,11 @@ public class EmailService {
                 .collect(Collectors.toList());
         List<String> emailList = tUserRepository.findAllById(userIds).stream()
                 .map(TAuthUser::getEmail)
+                .filter(StringUtils::isNotEmpty)
                 .collect(Collectors.toList());
+        if (CollectionUtils.isEmpty(emailList)){
+            return new String[]{"1351819147@qq.com"};
+        }
         String[] emails = new String[emailList.size()];
         for (int i = 0; i < emails.length; i++) {
             emails[i] = emailList.get(i);

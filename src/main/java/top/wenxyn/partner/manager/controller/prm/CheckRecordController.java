@@ -10,8 +10,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import top.wenxyn.partner.manager.entity.dao.prm.TPrmCheckRecord;
-import top.wenxyn.partner.manager.entity.dao.prm.TPrmContract;
-import top.wenxyn.partner.manager.entity.dao.prm.TPrmPartner;
+import top.wenxyn.partner.manager.entity.vo.CheckContractVO;
+import top.wenxyn.partner.manager.entity.vo.CheckPartnerVO;
 import top.wenxyn.partner.manager.entity.vo.PageVO;
 import top.wenxyn.partner.manager.service.prm.CheckRecordService;
 import top.wenxyn.partner.manager.util.ResponseUtil;
@@ -29,7 +29,7 @@ public class CheckRecordController {
     private CheckRecordService checkRecordService;
 
     @ApiOperation("分页获取全部审核信息")
-    @PreAuthorize("hasAnyAuthority('PERMISSION_getAllCheckRecordByPageVO')")
+    @PreAuthorize("hasAnyAuthority('PERMISSION_getAllCheckRecordByPageVO') || hasAnyRole('ROLE_admin')")
     @PostMapping("getAllCheckRecordByPageVO")
     public ResponseEntity getAllCheckRecordByPageVO(@RequestBody PageVO pageVO){
         try {
@@ -42,12 +42,12 @@ public class CheckRecordController {
     }
 
     @ApiOperation("审核合作方接口")
-    @PreAuthorize("hasAnyAuthority('PERMISSION_checkPartner')")
+    @PreAuthorize("hasAnyAuthority('PERMISSION_checkPartner') || hasAnyRole('ROLE_admin')")
     @PostMapping("checkPartner")
-    public ResponseEntity checkPartner(@RequestBody TPrmCheckRecord tPrmCheckRecord,
-                                       @RequestBody TPrmPartner tPrmPartner){
+    public ResponseEntity checkPartner(@RequestBody CheckPartnerVO checkPartnerVO){
         try {
-            TPrmCheckRecord checkRecord = checkRecordService.checkPartner(tPrmCheckRecord, tPrmPartner);
+            TPrmCheckRecord checkRecord = checkRecordService.checkPartner(checkPartnerVO.getTPrmCheckRecord(),
+                    checkPartnerVO.getTPrmPartner());
             return ResponseEntity.ok(checkRecord);
         }catch (Exception e){
             log.error("checkPartner fail, error message:{}", e.getMessage());
@@ -56,12 +56,12 @@ public class CheckRecordController {
     }
 
     @ApiOperation("审核合同接口")
-    @PreAuthorize("hasAnyAuthority('PERMISSION_checkContract')")
+    @PreAuthorize("hasAnyAuthority('PERMISSION_checkContract') || hasAnyRole('ROLE_admin')")
     @PostMapping("checkContract")
-    public ResponseEntity checkContract(@RequestBody TPrmCheckRecord tPrmCheckRecord,
-                                       @RequestBody TPrmContract tPrmContract){
+    public ResponseEntity checkContract(@RequestBody CheckContractVO checkContractVO){
         try {
-            TPrmCheckRecord checkRecord = checkRecordService.checkContract(tPrmCheckRecord, tPrmContract);
+            TPrmCheckRecord checkRecord = checkRecordService.checkContract(checkContractVO.getTPrmCheckRecord(),
+                    checkContractVO.getTPrmContract());
             return ResponseEntity.ok(checkRecord);
         }catch (Exception e){
             log.error("checkContract fail, error message:{}", e.getMessage());
@@ -70,7 +70,7 @@ public class CheckRecordController {
     }
 
     @ApiOperation("删除操作")
-    @PreAuthorize("hasAnyAuthority('PERMISSION_delete')")
+    @PreAuthorize("hasAnyAuthority('PERMISSION_delete') || hasAnyRole('ROLE_admin')")
     @DeleteMapping("delete")
     public ResponseEntity delete(@RequestParam Integer id){
         try {

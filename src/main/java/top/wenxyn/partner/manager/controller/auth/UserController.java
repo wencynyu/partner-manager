@@ -34,7 +34,7 @@ public class UserController {
     private UserService userService;
 
     @ApiOperation("获取用户数量")
-    @PreAuthorize("hasAnyAuthority('PERMISSION_getUserCount')")
+    @PreAuthorize("hasAnyAuthority('PERMISSION_getUserCount') || hasAnyRole('ROLE_admin')")
     @PostMapping("getUserCount")
     public ResponseEntity getUserCount(){
         try {
@@ -47,7 +47,7 @@ public class UserController {
     }
 
     @ApiOperation("分页获取全部用户信息")
-    @PreAuthorize("hasAnyAuthority('PERMISSION_getAllUserByPageVO')")
+    @PreAuthorize("hasAnyAuthority('PERMISSION_getAllUserByPageVO') || hasAnyRole('ROLE_admin')")
     @PostMapping("getAllUserByPageVO")
     public ResponseEntity getAllUserByPageVO(@RequestBody PageVO pageVO){
         try {
@@ -60,7 +60,7 @@ public class UserController {
     }
 
     @ApiOperation("添加新用户/非注册行为")
-    @PreAuthorize("hasAnyAuthority('PERMISSION_addUser')")
+    @PreAuthorize("hasAnyAuthority('PERMISSION_addUser') || hasAnyRole('ROLE_admin')")
     @PostMapping("addUser")
     public ResponseEntity addUser(@RequestBody TAuthUser user){
 
@@ -74,7 +74,7 @@ public class UserController {
     }
 
     @ApiOperation("添加用户与角色的绑定信息")
-    @PreAuthorize("hasAnyAuthority('PERMISSION_addUserRoleRelation')")
+    @PreAuthorize("hasAnyAuthority('PERMISSION_addUserRoleRelation') || hasAnyRole('ROLE_admin')")
     @PostMapping("addUserRoleRelation")
     public ResponseEntity addRoleMenuRelation(@RequestBody Set<Integer> userIds,
                                               @RequestBody Set<Integer> roleIds){
@@ -97,7 +97,7 @@ public class UserController {
     }
 
     @ApiOperation("修改密码")
-    @PreAuthorize("hasAnyAuthority('PERMISSION_changePassword')")
+    @PreAuthorize("hasAnyAuthority('PERMISSION_changePassword') || hasAnyRole('ROLE_admin')")
     @PostMapping("changePassword")
     public ResponseEntity changePassword(@RequestParam String oldPassword,
                                          @RequestParam String newPassword){
@@ -111,7 +111,7 @@ public class UserController {
     }
 
     @ApiOperation("修改用户信息")
-    @PreAuthorize("hasAnyAuthority('PERMISSION_updateUser')")
+    @PreAuthorize("hasAnyAuthority('PERMISSION_updateUser') || hasAnyRole('ROLE_admin')")
     @PostMapping("updateUser")
     public ResponseEntity updateUser(@RequestBody TAuthUser user){
 
@@ -125,7 +125,7 @@ public class UserController {
     }
 
     @ApiOperation("删除操作")
-    @PreAuthorize("hasAnyAuthority('PERMISSION_delete')")
+    @PreAuthorize("hasAnyAuthority('PERMISSION_delete') || hasAnyRole('ROLE_admin')")
     @DeleteMapping("delete")
     public ResponseEntity delete(@RequestParam Integer id){
         try {
